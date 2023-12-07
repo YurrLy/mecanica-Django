@@ -37,7 +37,7 @@
           <div class="card-body">
             <h5 class="card-title">Ordens de Serviço</h5>
             <p class="card-text">Informações sobre ordens de serviço.</p>
-            <a href="" class="btn btn-primary">Ver detalhes</a>
+            <a href="{% url 'ordens_servico' %}" class="btn btn-primary">Ver detalhes</a>
           </div>
         </div>
       </div>
@@ -45,28 +45,12 @@
       <div class="col-md-4 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Mecânicos</h5>
-            <p class="card-text">Informações sobre mecânicos.</p>
-            <a href="" class="btn btn-primary">Ver detalhes</a>
+            <h5 class="card-title">Mecânicos e equipe</h5>
+            <p class="card-text">Informações sobre mecânicos e equipe.</p>
+            <a href="{% url 'listar_mecanicos' %}" class="btn btn-primary">Ver detalhes</a>
           </div>
         </div>
       </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Equipe</h5>
-            <p class="card-text">Informações sobre a equipe.</p>
-            <a href="" class="btn btn-primary">Ver detalhes</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container mt-3">
-    <a href="" class="btn btn-danger">Logout</a>
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

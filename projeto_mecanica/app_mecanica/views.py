@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Veiculo, Peca, Cliente, Servico, OrdemDeServico
-from .forms import VeiculoForm, PecaForm, ClienteForm, ServicoForm
+from .models import Veiculo, Peca, Cliente, Servico, OrdemDeServico, Mecanico, Equipe
+from .forms import VeiculoForm, PecaForm, ClienteForm, ServicoForm, MecanicoForm, EquipeForm, OrdemDeServicoForm
 
 
 def login_view(request):
@@ -110,3 +110,60 @@ def deletar_servico(request, servico_id):
     servico = get_object_or_404(Servico, pk=servico_id)
     servico.delete()
     return redirect('veiculos_list')
+
+def listar_mecanicos(request):
+    equipes = Equipe.objects.all()
+    mecanicos = Mecanico.objects.all()
+    return render(request, 'listar_mecanicos.html', {'mecanicos': mecanicos, 'equipes': equipes})
+
+def cadastrar_mecanico(request):
+    if request.method == 'POST':
+        form = MecanicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_mecanicos')
+    else:
+        form = MecanicoForm()
+
+    return render(request, 'cadastrar_mecanico.html', {'form': form})
+
+def cadastrar_equipe(request):
+    if request.method == 'POST':
+        form = EquipeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_mecanicos')
+    else:
+        form = EquipeForm()
+
+    return render(request, 'cadastrar_equipe.html', {'form': form})
+
+def deletar_mecanico(request, mecanico_id):
+    mecanico = get_object_or_404(Mecanico, pk=mecanico_id)
+    mecanico.delete()
+    return redirect('listar_mecanicos')
+
+def deletar_equipe(request, equipe_id):
+    equipe = get_object_or_404(Equipe, pk=equipe_id)
+    equipe.delete()
+    return redirect('listar_mecanicos')
+
+def ordens_servico(request):
+    ordens = OrdemDeServico.objects.all()
+    return render(request, 'ordens_servico.html', {'ordens': ordens})
+
+def cadastrar_ordem_servico(request):
+    if request.method == 'POST':
+        form = OrdemDeServicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ordens_servico')
+    else:
+        form = OrdemDeServicoForm()
+
+    return render(request, 'cadastrar_ordem_servico.html', {'form': form})
+
+def deletar_ordem_servico(request, ordem_id):
+    ordem = get_object_or_404(OrdemDeServico, pk=ordem_id)
+    ordem.delete()
+    return redirect('ordens_servico')
