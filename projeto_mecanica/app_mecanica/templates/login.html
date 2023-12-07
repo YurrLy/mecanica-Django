@@ -13,7 +13,7 @@
 <header>
     <nav class="navbar navbar-light" style="background-color: #002153;">
         <div class="container-fluid justify-content-center">
-            <span style="color: white;" class="navbar-brand mb-0 h1">Navbar</span>
+            <span style="color: white;" class="navbar-brand mb-0 h1">LOGIN</span>
         </div>
     </nav>
 </header>
@@ -21,11 +21,24 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="post" action="{% url 'login' %}">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Erro:</strong> Verifique os campos destacados abaixo.
+                </div>
+            {% endif %}
+            <form method="post" action="{% url 'login_view' %}">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="username" class="form-label">Nome</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Digite seu nome">
+                    <label for="username" class="form-label">Nome de Usuário</label>
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Digite seu nome de usuário">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Senha</label>
