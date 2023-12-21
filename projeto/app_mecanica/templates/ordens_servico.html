@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Listagem de Ordens de Serviço</title>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #002153;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}" style="color: white;">HOME</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'veiculos_list' %}">Veículos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'listar_mecanicos' %}">Mecânicos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'ordens_servico' %}">Ordens de Serviço</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="">
+        <div class="card-header bg-info text-white">
+            <h2>Listagem de Ordens de Serviço</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 ">
+                    <ul class="list-group p-4">
+                        {% for ordem in ordens %}
+                            <li class="list-group-item">
+                                <h5>Ordem de Serviço #{{ ordem.id }}</h5>
+                                <p><strong>Veículo:</strong> {{ ordem.veiculo }}</p>
+                                <p><strong>Equipe:</strong> {{ ordem.equipe }}</p>
+                                <p><strong>Data de Emissão:</strong> {{ ordem.data_emissao }}</p>
+                                <p><strong>Valor Total:</strong> R$ {{ ordem.valor_total }}</p>
+                                <form method="post" action="{% url 'deletar_ordem_servico' ordem.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'cadastrar_ordem_servico' %}" class="btn btn-primary mt-3">Cadastrar Nova Ordem de Serviço</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <a href="{% url 'home' %}" class="btn btn-secondary px-5">Voltar</a>
+</div>
+
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
