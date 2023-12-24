@@ -28,17 +28,20 @@ def home(request):
 
 
 def veiculos_list(request):
-    clientes = Cliente.objects.all()
     veiculos = Veiculo.objects.all()
-    pecas = Peca.objects.all()
-    servicos = Servico.objects.all()
+    return render(request, 'veiculos_list.html', {'veiculos': veiculos})
 
-    return render(request, 'veiculos_list.html', {
-        'clientes': clientes,
-        'veiculos': veiculos,
-        'pecas': pecas,
-        'servicos': servicos,
-    })
+def pecas_list(request):
+    pecas = Peca.objects.all()
+    return render(request, 'pecas_list.html', {'pecas': pecas})
+
+def clientes_list(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'clientes_list.html', {'clientes': clientes})
+
+def servicos_list(request):
+    servicos = Servico.objects.all()
+    return render(request, 'servicos_list.html', {'servicos': servicos})
     
 def cadastrar_veiculo(request):
     if request.method == 'POST':
@@ -56,13 +59,12 @@ def deletar_veiculo(request, veiculo_id):
     veiculo.delete()
     return redirect('veiculos_list')
 
-
 def cadastrar_peca(request):
     if request.method == 'POST':
         form = PecaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('veiculos_list')
+            return redirect('peca_list')
     else:
         form = PecaForm()
 
@@ -73,16 +75,16 @@ def deletar_peca(request, peca_id):
 
     if request.method == 'POST':
         peca.delete()
-        return redirect('veiculos_list') 
+        return redirect('peca_list') 
 
-    return render(request, 'veiculos_list.html', {'peca': peca})
+    return render(request, 'peca_list.html', {'peca': peca})
 
 def cadastrar_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('veiculos_list')
+            return redirect('cliente_list')
     else:
         form = ClienteForm()
 
@@ -91,7 +93,7 @@ def cadastrar_cliente(request):
 def deletar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     cliente.delete()
-    return redirect('veiculos_list')
+    return redirect('cliente_list')
 
 def cadastrar_servico(request):
     if request.method == 'POST':
@@ -100,7 +102,7 @@ def cadastrar_servico(request):
             servico = form.save(commit=False)
             servico.save()
 
-            return redirect('veiculos_list')
+            return redirect('servico_list')
     else:
         form = ServicoForm()
 
@@ -109,12 +111,15 @@ def cadastrar_servico(request):
 def deletar_servico(request, servico_id):
     servico = get_object_or_404(Servico, pk=servico_id)
     servico.delete()
-    return redirect('veiculos_list')
+    return redirect('servico_list')
 
 def listar_mecanicos(request):
-    equipes = Equipe.objects.all()
     mecanicos = Mecanico.objects.all()
-    return render(request, 'listar_mecanicos.html', {'mecanicos': mecanicos, 'equipes': equipes})
+    return render(request, 'listar_mecanicos.html', {'mecanicos': mecanicos})
+
+def listar_equipes(request):
+    equipes = Equipe.objects.all()
+    return render(request, 'listar_equipes.html', {'equipes': equipes})
 
 def cadastrar_mecanico(request):
     if request.method == 'POST':
@@ -132,7 +137,7 @@ def cadastrar_equipe(request):
         form = EquipeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('listar_mecanicos')
+            return redirect('listar_equipes.html')
     else:
         form = EquipeForm()
 
@@ -146,7 +151,7 @@ def deletar_mecanico(request, mecanico_id):
 def deletar_equipe(request, equipe_id):
     equipe = get_object_or_404(Equipe, pk=equipe_id)
     equipe.delete()
-    return redirect('listar_mecanicos')
+    return redirect('listar_equipes')
 
 def ordens_servico(request):
     ordens = OrdemDeServico.objects.all()

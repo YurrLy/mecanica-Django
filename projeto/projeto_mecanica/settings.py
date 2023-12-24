@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0&egcwgo@ai87)0c4bas+_luiet5sah-jtv&kgjg+j=j_@7v1o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['oficina-mecanica-wtns.onrender.com']
+ALLOWED_HOSTS = ['oficina-mecanica-wtns.onrender.com','127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com','https://*.127.0.0.1']
 

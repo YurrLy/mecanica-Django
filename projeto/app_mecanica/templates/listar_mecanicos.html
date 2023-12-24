@@ -21,7 +21,19 @@
                             <a class="nav-link" style="color: white;" href="{% url 'veiculos_list' %}">Veículos</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'pecas_list' %}">Peças</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'clientes_list' %}">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'servicos_list' %}">Serviços</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" style="color: white;" href="{% url 'listar_mecanicos' %}">Mecânicos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'listar_equipes' %}">Equipes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="color: white;" href="{% url 'ordens_servico' %}">Ordens de Serviço</a>
@@ -35,54 +47,39 @@
 {% block content %}
 
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-info text-white">
-            <h2>Listagem de Mecânicos</h2>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                {% for mecanico in mecanicos %}
-                    <li class="list-group-item">
-                        <h5>Mecânico: {{ mecanico.nome }}</h5>
-                        <p><strong>Endereço:</strong> {{ mecanico.endereco }}</p>
-                        <p><strong>Especialidade:</strong> {{ mecanico.especialidade }}</p>
-                        <form method="post" action="{% url 'deletar_mecanico' mecanico.id %}" style="display:inline;">
+    <h2 class="text-center mb-4">Mecânicos Cadastrados</h2>
+    <table class="table table-bordered" style="margin-top: 20px; background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <thead>
+            <tr>
+                <th style="padding: 15px; text-align: left; background-color: #007bff; color: #ffffff;">ID</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Nome</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Endereço</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Especialidade</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mecanico in mecanicos %}
+                <tr>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ mecanico.id }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ mecanico.nome }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ mecanico.endereco }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ mecanico.especialidade }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <form method="post" action="{% url 'deletar_mecanico' mecanico.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                            <button type="submit" class="btn btn-primary">Deletar</button>
                         </form>
-                    </li>
-                {% endfor %}
-            </ul>
-            <a href="{% url 'cadastrar_mecanico' %}" class="btn btn-primary mt-3">Cadastrar Novo Mecânico</a>
-        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center mt-4">
+        <a href="{% url 'cadastrar_mecanico' %}" class="btn btn-primary">Cadastrar Novo Mecânico</a>
     </div>
 </div>
 
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-info text-white">
-            <h2>Listagem de Equipes</h2>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                {% for equipe in equipes %}
-                    <li class="list-group-item">
-                        <h5>Equipe: {{ equipe }}</h5>
-                        <form method="post" action="{% url 'deletar_equipe' equipe.id %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-            <a href="{% url 'cadastrar_equipe' %}" class="btn btn-primary mt-3">Cadastrar Nova Equipe</a>
-        </div>
-    </div>
-</div>
-
-<div class="container mt-5">
-    <a href="{% url 'home' %}" class="btn btn-secondary px-5">Voltar</a>
-</div>
 
 {% endblock %}
 

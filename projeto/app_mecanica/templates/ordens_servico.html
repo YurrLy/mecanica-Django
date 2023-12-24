@@ -21,7 +21,19 @@
                             <a class="nav-link" style="color: white;" href="{% url 'veiculos_list' %}">Veículos</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'pecas_list' %}">Peças</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'clientes_list' %}">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'servicos_list' %}">Serviços</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" style="color: white;" href="{% url 'listar_mecanicos' %}">Mecânicos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" href="{% url 'listar_equipes' %}">Equipes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="color: white;" href="{% url 'ordens_servico' %}">Ordens de Serviço</a>
@@ -35,40 +47,43 @@
 {% block content %}
 
 <div class="container mt-5">
-    <div class="">
-        <div class="card-header bg-info text-white">
-            <h2>Listagem de Ordens de Serviço</h2>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-8 ">
-                    <ul class="list-group p-4">
-                        {% for ordem in ordens %}
-                            <li class="list-group-item">
-                                <h5>Ordem de Serviço #{{ ordem.id }}</h5>
-                                <p><strong>Veículo:</strong> {{ ordem.veiculo }}</p>
-                                <p><strong>Equipe:</strong> {{ ordem.equipe }}</p>
-                                <p><strong>Data de Emissão:</strong> {{ ordem.data_emissao }}</p>
-                                <p><strong>Valor Total:</strong> R$ {{ ordem.valor_total }}</p>
-                                <form method="post" action="{% url 'deletar_ordem_servico' ordem.id %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
-                                </form>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <a href="{% url 'cadastrar_ordem_servico' %}" class="btn btn-primary mt-3">Cadastrar Nova Ordem de Serviço</a>
-            </div>
-        </div>
+    <h2 class="text-center mb-4">Ordens de Serviço</h2>
+    <table class="table table-bordered" style="margin-top: 20px; background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <thead>
+            <tr>
+                <th style="padding: 15px; text-align: left; background-color: #28a745; color: #ffffff;">ID</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Veículo</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Equipe</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Emissão</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Conclusão</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Valor Total</th>
+                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ordem in ordens %}
+                <tr>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.id }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.veiculo }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.equipe }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.data_emissao }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.data_conclusao }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">R$ {{ ordem.valor_total }}</td>
+                    <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <form method="post" action="{% url 'deletar_ordem_servico' ordem.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center mt-4">
+        <a href="{% url 'cadastrar_ordem_servico' %}" class="btn btn-success">Cadastrar Nova Ordem de Serviço</a>
     </div>
 </div>
 
-<div class="container mt-5">
-    <a href="{% url 'home' %}" class="btn btn-secondary px-5">Voltar</a>
-</div>
 
 {% endblock %}
 
