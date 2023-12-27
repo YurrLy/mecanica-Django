@@ -30,6 +30,7 @@ urlpatterns = [
     path('equipes/deletar/<int:equipe_id>/', deletar_equipe, name='deletar_equipe'),
     path('ordens_servico/', ordens_servico, name='ordens_servico'),
     path('ordens_servico/cadastrar/', cadastrar_ordem_servico, name='cadastrar_ordem_servico'),
+    path('ordens_servico/editar/<int:ordem_id>/', cadastrar_ordem_servico, name='cadastrar_ordem_servico'),
     path('ordens_servico/deletar/<int:ordem_id>/', deletar_ordem_servico, name='deletar_ordem_servico'),
 
 ]

@@ -177,16 +177,18 @@ def ordens_servico(request):
     ordens = OrdemDeServico.objects.all()
     return render(request, 'ordens_servico.html', {'ordens': ordens})
 
-def cadastrar_ordem_servico(request):
+def cadastrar_ordem_servico(request, ordem_id=None):
+    ordem = get_object_or_404(OrdemDeServico, pk=ordem_id) if ordem_id else None
+
     if request.method == 'POST':
-        form = OrdemDeServicoForm(request.POST)
+        form = OrdemDeServicoForm(request.POST, instance=ordem)
         if form.is_valid():
             form.save()
             return redirect('ordens_servico')
     else:
-        form = OrdemDeServicoForm()
+        form = OrdemDeServicoForm(instance=ordem)
 
-    return render(request, 'cadastrar_ordem_servico.html', {'form': form})
+    return render(request, 'cadastrar_ordem_servico.html', {'form': form, 'ordem': ordem})
 
 def deletar_ordem_servico(request, ordem_id):
     ordem = get_object_or_404(OrdemDeServico, pk=ordem_id)

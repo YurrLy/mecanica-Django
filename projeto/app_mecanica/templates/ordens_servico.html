@@ -70,9 +70,10 @@
                     <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ ordem.data_conclusao }}</td>
                     <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">R$ {{ ordem.valor_total }}</td>
                     <td class="d-flex gap-1" style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <a href="{% url 'cadastrar_ordem_servico' ordem.id %}" class="btn btn-success">Editar</a>
                         <form method="post" action="{% url 'deletar_ordem_servico' ordem.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-success">Deletar</button>
+                            <button type="submit" class="btn btn-danger">Deletar</button>
                         </form>
                     </td>
                 </tr>
