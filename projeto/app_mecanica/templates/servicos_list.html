@@ -61,10 +61,11 @@
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ servico.id }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ servico.descricao }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">R$ {{ servico.valor }}</td>
-                        <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <td class="d-flex gap-1" style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                            <a href="{% url 'cadastrar_servico' servico.id %}" class="btn btn-warning">Editar</a>
                             <form method="post" action="{% url 'deletar_servico' servico.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning">Deletar</button>
+                                <button type="submit" class="btn btn-danger">Deletar</button>
                             </form>
                         </td>
                     </tr>

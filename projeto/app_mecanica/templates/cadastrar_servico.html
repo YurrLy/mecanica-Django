@@ -51,7 +51,7 @@
                     <h2 class="mb-0">Cadastrar Novo Serviço</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'cadastrar_servico' %}">
+                    <form method="post" action="{% if servico.id %}{% url 'cadastrar_servico' servico.id %}{% else %}{% url 'cadastrar_servico' %}{% endif %}">
                         {% csrf_token %}
 
                         <div class="mb-3">

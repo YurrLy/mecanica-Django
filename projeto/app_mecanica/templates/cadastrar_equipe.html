@@ -51,7 +51,8 @@
                     <h2 class="mb-0">Cadastrar Nova Equipe</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'cadastrar_equipe' %}">
+                    <form method="post" action="{% if equipe.id %}{% url 'cadastrar_equipe' equipe.id %}{% else %}{% url 'cadastrar_equipe' %}{% endif %}">
+
                         {% csrf_token %}
 
                         <div class="mb-3">

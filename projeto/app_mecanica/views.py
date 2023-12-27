@@ -97,29 +97,31 @@ def cadastrar_cliente(request, cliente_id=None):
 
     return render(request, 'cadastrar_cliente.html', {'form': form, 'cliente': cliente})
 
-
 def deletar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     cliente.delete()
     return redirect('clientes_list')
 
-def cadastrar_servico(request):
-    if request.method == 'POST':
-        form = ServicoForm(request.POST)
-        if form.is_valid():
-            servico = form.save(commit=False)
-            servico.save()
-
-            return redirect('servico_list')
+def cadastrar_servico(request, servico_id=None):
+    if servico_id:
+        servico = get_object_or_404(Servico, pk=servico_id)
     else:
-        form = ServicoForm()
+        servico = None
 
-    return render(request, 'cadastrar_servico.html', {'form': form})
+    if request.method == 'POST':
+        form = ServicoForm(request.POST, instance=servico)
+        if form.is_valid():
+            form.save()
+            return redirect('servicos_list')
+    else:
+        form = ServicoForm(instance=servico)
+
+    return render(request, 'cadastrar_servico.html', {'form': form, 'servico': servico})
 
 def deletar_servico(request, servico_id):
     servico = get_object_or_404(Servico, pk=servico_id)
     servico.delete()
-    return redirect('servico_list')
+    return redirect('servicos_list')
 
 def listar_mecanicos(request):
     mecanicos = Mecanico.objects.all()
@@ -129,27 +131,37 @@ def listar_equipes(request):
     equipes = Equipe.objects.all()
     return render(request, 'listar_equipes.html', {'equipes': equipes})
 
-def cadastrar_mecanico(request):
+def cadastrar_mecanico(request, mecanico_id=None):
+    if mecanico_id:
+        mecanico = get_object_or_404(Mecanico, pk=mecanico_id)
+    else:
+        mecanico = None
+
     if request.method == 'POST':
-        form = MecanicoForm(request.POST)
+        form = MecanicoForm(request.POST, instance=mecanico)
         if form.is_valid():
             form.save()
             return redirect('listar_mecanicos')
     else:
-        form = MecanicoForm()
+        form = MecanicoForm(instance=mecanico)
 
-    return render(request, 'cadastrar_mecanico.html', {'form': form})
+    return render(request, 'cadastrar_mecanico.html', {'form': form, 'mecanico': mecanico})
 
-def cadastrar_equipe(request):
+def cadastrar_equipe(request, equipe_id=None):
+    if equipe_id:
+        equipe = get_object_or_404(Equipe, pk=equipe_id)
+    else:
+        equipe = None
+
     if request.method == 'POST':
-        form = EquipeForm(request.POST)
+        form = EquipeForm(request.POST, instance=equipe)
         if form.is_valid():
             form.save()
-            return redirect('listar_equipes.html')
+            return redirect('listar_equipes')
     else:
-        form = EquipeForm()
+        form = EquipeForm(instance=equipe)
 
-    return render(request, 'cadastrar_equipe.html', {'form': form})
+    return render(request, 'cadastrar_equipe.html', {'form': form, 'equipe': equipe})
 
 def deletar_mecanico(request, mecanico_id):
     mecanico = get_object_or_404(Mecanico, pk=mecanico_id)
