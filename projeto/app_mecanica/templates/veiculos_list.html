@@ -65,7 +65,8 @@
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ veiculo.descricao }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ veiculo.modelo }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ veiculo.placa }}</td>
-                        <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <td class="d-flex gap-1" style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                            <a href="{% url 'cadastrar_veiculo' veiculo.id %}" class="btn btn-primary">Editar</a>
                             <form method="post" action="{% url 'deletar_veiculo' veiculo.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Deletar</button>

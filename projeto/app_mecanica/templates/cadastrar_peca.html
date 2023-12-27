@@ -51,7 +51,7 @@
                     <h2 class="mb-0">Cadastrar Nova Peça</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'cadastrar_peca' %}">
+                    <form method="post" action="{% if peca.id %}{% url 'cadastrar_peca' peca.id %}{% else %}{% url 'cadastrar_peca' %}{% endif %}">
                         {% csrf_token %}
 
                         <div class="mb-3">
@@ -65,8 +65,8 @@
                         </div>
 
                         <div class="text-center">
-                            <button class="btn btn-danger" type="submit">Cadastrar</button>
-                            <a href="{% url 'veiculos_list' %}" class="btn btn-primary m-1">Voltar</a>
+                            <button class="btn btn-primary" type="submit">Cadastrar</button>
+                            <a href="{% url 'pecas_list' %}" class="btn btn-primary m-1">Voltar</a>
                         </div>
                     </form>
                 </div>

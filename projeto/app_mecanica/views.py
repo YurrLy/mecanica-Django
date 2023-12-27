@@ -43,57 +43,65 @@ def servicos_list(request):
     servicos = Servico.objects.all()
     return render(request, 'servicos_list.html', {'servicos': servicos})
     
-def cadastrar_veiculo(request):
+def cadastrar_veiculo(request, veiculo_id=None):
+    veiculo = get_object_or_404(Veiculo, pk=veiculo_id) if veiculo_id else None
+
     if request.method == 'POST':
-        form = VeiculoForm(request.POST)
+        form = VeiculoForm(request.POST, instance=veiculo)
         if form.is_valid():
             form.save()
             return redirect('veiculos_list')
     else:
-        form = VeiculoForm()
+        form = VeiculoForm(instance=veiculo)
 
-    return render(request, 'cadastrar_veiculo.html', {'form': form})
+    return render(request, 'cadastrar_veiculo.html', {'form': form, 'veiculo': veiculo})
 
 def deletar_veiculo(request, veiculo_id):
     veiculo = Veiculo.objects.get(pk=veiculo_id)
     veiculo.delete()
     return redirect('veiculos_list')
 
-def cadastrar_peca(request):
+def cadastrar_peca(request, peca_id=None):
+    peca = get_object_or_404(Peca, pk=peca_id) if peca_id else None
+
     if request.method == 'POST':
-        form = PecaForm(request.POST)
+        form = PecaForm(request.POST, instance=peca)
         if form.is_valid():
             form.save()
-            return redirect('peca_list')
+            return redirect('pecas_list')
     else:
-        form = PecaForm()
+        form = PecaForm(instance=peca)
 
-    return render(request, 'cadastrar_peca.html', {'form': form})
+    return render(request, 'cadastrar_peca.html', {'form': form, 'peca': peca})
 
 def deletar_peca(request, peca_id):
     peca = get_object_or_404(Peca, pk=peca_id)
 
     if request.method == 'POST':
         peca.delete()
-        return redirect('peca_list') 
+        return redirect('pecas_list') 
 
-    return render(request, 'peca_list.html', {'peca': peca})
+    return render(request, 'pecas_list.html', {'peca': peca})
 
-def cadastrar_cliente(request):
+def cadastrar_cliente(request, cliente_id=None):
+    cliente = get_object_or_404(Cliente, id=cliente_id) if cliente_id else None
+
     if request.method == 'POST':
-        form = ClienteForm(request.POST)
+        form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
             form.save()
-            return redirect('cliente_list')
+            messages.success(request, 'Cliente cadastrado/editado com sucesso!')
+            return redirect('clientes_list')
     else:
-        form = ClienteForm()
+        form = ClienteForm(instance=cliente)
 
-    return render(request, 'cadastrar_cliente.html', {'form': form})
+    return render(request, 'cadastrar_cliente.html', {'form': form, 'cliente': cliente})
+
 
 def deletar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     cliente.delete()
-    return redirect('cliente_list')
+    return redirect('clientes_list')
 
 def cadastrar_servico(request):
     if request.method == 'POST':

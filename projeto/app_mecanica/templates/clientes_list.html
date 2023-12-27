@@ -63,7 +63,11 @@
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ cliente.nome }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ cliente.endereco }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ cliente.telefone }}</td>
-                        <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <td class="d-flex gap-1" style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                            <form method="post" action="{% if cliente.id %}{% url 'cadastrar_cliente' cliente.id %}{% else %}{% url 'cadastrar_cliente' %}{% endif %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </form>
                             <form method="post" action="{% url 'deletar_cliente' cliente.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Deletar</button>

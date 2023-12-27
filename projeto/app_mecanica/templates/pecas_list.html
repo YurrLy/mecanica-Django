@@ -61,7 +61,8 @@
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ peca.id }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">{{ peca.tipo }}</td>
                         <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">R$ {{ peca.valor }}</td>
-                        <td style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                        <td class="d-flex gap-1" style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6;">
+                            <a href="{% url 'cadastrar_peca' peca.id %}" class="btn btn-success">Editar</a>
                             <form method="post" action="{% url 'deletar_peca' peca.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Deletar</button>
@@ -72,7 +73,7 @@
             </tbody>
         </table>
         <div class="text-center mt-4">
-            <a href="{% url 'cadastrar_peca' %}" class="btn btn-success">Cadastrar Nova Peça</a>
+            <a href="{% url 'cadastrar_peca' %}" class="btn btn-success mt-3">Cadastrar Nova Peça</a>
         </div>
     </div>
 
